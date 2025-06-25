@@ -1,18 +1,19 @@
-# Mastra 天気AI アプリケーション
+# Mastra Ollama MCP エージェント
 
-OpenAI GPT-4o-miniとOllama（ローカルLLM）を使用した天気情報とAIエージェントのMastraベース統合アプリケーションです。
+Ollama（ローカルLLM）とMCP（Model Context Protocol）を統合したMastraベースのAIエージェントアプリケーションです。
 
 ## 機能
 
-- **天気エージェント**: OpenAI GPT-4o-miniを使用した天気情報アシスタント
 - **Ollamaエージェント**: MCPクライアント統合によるローカルLLMエージェント（サイコロ機能付き）
-- **天気ワークフロー**: 天気データに基づく活動提案システム
+- **MCP統合**: Model Context Protocolによる拡張可能なツール連携
 - **メモリ機能**: LibSQLStoreを使用した永続的なエージェントメモリ
+- **ローカル実行**: 完全にローカル環境で動作するAIエージェント
 
 ## 必要環境
 
 - Node.js >= 20.9.0
 - npm または yarn
+- Ollama（ローカルLLMの実行環境）
 
 ## セットアップ
 
@@ -21,7 +22,16 @@ OpenAI GPT-4o-miniとOllama（ローカルLLM）を使用した天気情報とAI
 npm install
 ```
 
-2. 環境変数の設定（オプション）:
+2. Ollamaのセットアップ:
+```bash
+# Ollamaのインストール（macOS/Linux）
+curl -fsSL https://ollama.ai/install.sh | sh
+
+# モデルのダウンロード
+ollama pull hf.co/mmnga/sarashina2.2-3b-instruct-v0.1-gguf:Q4_K_M
+```
+
+3. 環境変数の設定（オプション）:
 ```bash
 # Ollama APIエンドポイント（デフォルト: http://localhost:11434/api）
 OLLAMA_BASE_URL=http://localhost:11434/api
@@ -48,40 +58,46 @@ npm run start
 
 ## アーキテクチャ
 
-### エージェント
+### Ollamaエージェント
 
-1. **天気エージェント** (`src/mastra/agents/weather-agent.ts`)
-   - OpenAI GPT-4o-miniモデルを使用
-   - 天気ツールとの統合
-   - 永続的なメモリストレージ
+**Ollamaエージェント** (`src/mastra/agents/mcpAgent.ts`):
+- ローカルOllamaモデル（デフォルト: sarashina2.2-3b-instruct）を使用
+- MCP（Model Context Protocol）クライアント統合
+- サイコロ機能付きダイスローラーサーバーとの連携
+- 日本語での対話が可能
+- 永続的なメモリストレージ
 
-2. **Ollamaエージェント** (`src/mastra/agents/mcpAgent.ts`)
-   - ローカルOllamaモデルを使用
-   - MCP（Model Context Protocol）クライアント統合
-   - サイコロ機能付きダイスローラーサーバー
+### MCP統合
 
-### ワークフロー
+**MCPクライアント**:
+- Streamable HTTP経由でMCPサーバーと通信
+- dice-rollerサーバーによるサイコロ機能
+- 拡張可能なツールシステム
 
-**天気ワークフロー** (`src/mastra/workflows/weather-workflow.ts`):
-- 2段階のワークフロー: `fetchWeather` → `planActivities`
-- Open-Meteo APIから天気データを取得
-- 天気条件に基づく場所固有の活動提案
+### 主要コンポーネント
 
-### ツール
+**メインエントリー** (`src/mastra/index.ts`):
+- Mastraインスタンスの設定
+- エージェントとストレージの構成
+- PinoLoggerによるログ管理
 
-**天気ツール** (`src/mastra/tools/weather-tool.ts`):
-- Open-Meteo地理コーディングおよび天気APIとの統合
-- 温度、湿度、風況を含む包括的な天気データ
-- 天気コードから人間が読める状態への変換
+## 使用方法
 
-## ストレージ
+1. 開発サーバーを起動:
+```bash
+npm run dev
+```
 
-- 開発環境: インメモリデータベース (`:memory:`)
-- プロダクション環境: SQLiteファイルストレージ (`file:../mastra.db`)
+2. Ollamaエージェントとの対話:
+   - エージェントは日本語で応答
+   - サイコロ機能が利用可能
+   - 会話履歴は永続化される
 
-## ログ
+## ストレージとログ
 
-PinoLoggerを使用してinfoレベルでログを記録
+- **開発環境**: インメモリデータベース (`:memory:`)
+- **プロダクション環境**: SQLiteファイルストレージ (`file:../mastra.db`)
+- **ログ**: PinoLoggerによるinfoレベルでの記録
 
 ## ライセンス
 
