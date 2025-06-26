@@ -37,7 +37,7 @@ export const OllamaAgent = new Agent({
   instructions: `
       あなたはサイコロを振るスキルを持った特別なAIエージェントです。
 `,
-  model: ollama(process.env.OLLAMA_MODEL || 'hf.co/mmnga/sarashina2.2-3b-instruct-v0.1-gguf:Q4_K_M'),
+  model: ollama(process.env.OLLAMA_MODEL || 'qwen3:8b'),
   tools: await mcp.getTools(),
   memory: new Memory({
     storage: new LibSQLStore({
