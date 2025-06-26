@@ -28,15 +28,19 @@ npm install
 curl -fsSL https://ollama.ai/install.sh | sh
 
 # モデルのダウンロード
-ollama pull hf.co/mmnga/sarashina2.2-3b-instruct-v0.1-gguf:Q4_K_M
+ollama pull qwen3:8b
 ```
 
 3. 環境変数の設定（オプション）:
 ```bash
+$ cp .env.example .env
+```
+
+```text: .env
 # Ollama APIエンドポイント（デフォルト: http://localhost:11434/api）
 OLLAMA_BASE_URL=http://localhost:11434/api
 
-# 使用するOllamaモデル（デフォルト: hf.co/mmnga/sarashina2.2-3b-instruct-v0.1-gguf:Q4_K_M）
+# 使用するOllamaモデル（デフォルト: qwen3:8b）
 OLLAMA_MODEL=your-model-name
 ```
 
