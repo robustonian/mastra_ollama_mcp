@@ -32,6 +32,7 @@ This is a Mastra-based AI application that integrates weather services with Olla
 **Ollama Agent** (`src/mastra/agents/mcpAgent.ts`):
 - Uses local Ollama model (default: hf.co/mmnga/sarashina2.2-3b-instruct-v0.1-gguf:Q4_K_M)
 - Integrates MCP client with dice-roller server via streamable HTTP
+- **Enhanced Fork**: Uses `ollama-ai-provider-fork` with improved Tool+Streaming support
 - Environment variables: `OLLAMA_BASE_URL` (default: http://localhost:11434/api), `OLLAMA_MODEL`
 
 ### Workflow System
