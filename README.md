@@ -65,7 +65,7 @@ npm run start
 ### Ollamaエージェント
 
 **Ollamaエージェント** (`src/mastra/agents/mcpAgent.ts`):
-- ローカルOllamaモデル（デフォルト: sarashina2.2-3b-instruct）を使用
+- ローカルOllamaモデル（デフォルト: qwen3:8b）を使用
 - MCP（Model Context Protocol）クライアント統合
 - サイコロ機能付きダイスローラーサーバーとの連携
 - 日本語での対話が可能
