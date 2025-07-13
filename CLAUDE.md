@@ -57,3 +57,25 @@ Required Node.js version: >=20.9.0
 Optional environment variables:
 - `OLLAMA_BASE_URL` - Ollama API endpoint (default: http://localhost:11434/api)  
 - `OLLAMA_MODEL` - Ollama model to use (default: hf.co/mmnga/sarashina2.2-3b-instruct-v0.1-gguf:Q4_K_M)
+
+## Key Dependencies
+
+- **@mastra/core** (v0.10.12) - Core Mastra framework for agents and workflows
+- **@mastra/mcp** (v0.10.6) - Model Context Protocol integration
+- **@robustonian/ollama-ai-provider-fork** (v1.2.1) - Enhanced Ollama provider with Tool+Streaming support
+- **@ai-sdk/openai** (v1.3.23) - OpenAI integration for weather agent
+- **@mastra/libsql** (v0.11.0) - SQLite storage backend
+- **@mastra/memory** (v0.11.2) - Agent memory management
+
+## MCP Integration Details
+
+The MCP client is configured to connect to a dice-roller server via streamable HTTP:
+- Server endpoint: `https://streamable_http_mcp_test.robustonian.com/mcp`
+- Uses `npx mcp-remote` for connection management
+- Provides dice rolling capabilities to the Ollama agent
+
+## Storage Configuration
+
+- **Development**: In-memory storage (`:memory:`) for telemetry and evals
+- **Production**: File-based storage (`file:../mastra.db`) for agent memory
+- Agent memory is persistent and stored relative to `.mastra/output` directory
