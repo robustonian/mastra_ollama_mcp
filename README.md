@@ -68,6 +68,7 @@ npm run start
 - ローカルOllamaモデル（デフォルト: qwen3:8b）を使用
 - MCP（Model Context Protocol）クライアント統合
 - サイコロ機能付きダイスローラーサーバーとの連携
+- **強化フォーク版**: Tool+Streaming機能をサポートする`ollama-ai-provider-fork`を使用
 - 日本語での対話が可能
 - 永続的なメモリストレージ
 
