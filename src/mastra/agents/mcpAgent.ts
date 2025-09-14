@@ -3,6 +3,7 @@ import { Memory } from '@mastra/memory';
 import { LibSQLStore } from '@mastra/libsql';
 import { MCPClient } from "@mastra/mcp";
 import { createOllama } from '@robustonian/ollama-ai-provider-fork';
+// import { createOllama } from 'ollama-ai-provider-v2';
 import 'dotenv/config';
 
 const ollama = createOllama({
